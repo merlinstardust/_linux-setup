@@ -1,0 +1,12 @@
+Host camelotuk
+     HostName camelot.uk.to
+     User merlin
+     Port 2222
+     ServerAliveInterval 30
+     ServerAliveCountMax 120
+
+Host camelot
+     HostName 192.168.2.49
+     User merlin
+     ServerAliveInterval 30
+     ServerAliveCountMax 120

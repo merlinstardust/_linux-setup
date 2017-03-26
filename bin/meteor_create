@@ -1,0 +1,51 @@
+#!/bin/sh
+
+projectName=$1
+
+if [ -d $projectName ]; then exit; fi
+
+meteor create $projectName
+cd $projectName
+
+rm $projectName.*
+
+touch mup.json
+touch settings.json
+touch README.md
+touch todos
+
+mkdir -p client/
+mkdir -p client/lib/
+mkdir -p client/stylesheets/
+mkdir -p client/templates/
+touch client/main.html
+touch client/main.js
+touch client/lib/defaults.js
+
+mkdir -p lib/
+mkdir -p lib/collections/
+mkdir -p lib/methods/
+touch lib/routes.js
+
+mkdir -p public/
+
+mkdir -p server/
+touch server/main.js
+touch server/fixtures.js
+
+startup="Meteor.startup(function () {
+
+});"
+
+echo "$startup" > client/lib/defaults.js
+echo "$startup" > server/fixtures.js
+
+mainHtml="<head>
+  <title>$projectName</title>
+</head>
+
+<template name=\"Layout\">
+
+</template>"
+
+echo "$mainHtml" > client/main.html

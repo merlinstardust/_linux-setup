@@ -1,0 +1,16 @@
+#!/bin/bash
+
+name=$1
+data="{\"name\": \"$name\"}"
+user=merlinpatt
+repo=git@github.com:$user/$name.git
+
+echo "curl -H \"Content-Type: application/json\" -X POST -d \"$data\" -u $user:$GITHUB_KEY https://api.github.com/user/repos > /dev/null"
+curl -H "Content-Type: application/json" -X POST -d "$data" -u $user:$GITHUB_KEY https://api.github.com/user/repos > /dev/null
+echo "Created repository $name"
+
+echo "git init"
+git init
+echo "git remote add origin $repo"
+git remote add origin $repo
+echo "Added $repo as origin"

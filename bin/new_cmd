@@ -1,0 +1,7 @@
+#!/bin/bash
+
+BIN_PATH=~/.bin
+
+echo "#!/bin/bash" >> $BIN_PATH/$1
+chmod 755 $BIN_PATH/$1
+emacs -nw $BIN_PATH/$1

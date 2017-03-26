@@ -1,0 +1,44 @@
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(show-paren-mode t))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(font-lock-comment-face ((((class color) (min-colors 8) (background light)) (:foreground "Cyan")))))
+
+(global-set-key (kbd "M-<up>") 'windmove-up)
+(global-set-key (kbd "M-<down>") 'windmove-down)
+(global-set-key (kbd "M-<left>") 'windmove-left)
+(global-set-key (kbd "M-<right>") 'windmove-right)
+
+(setq tab-width 2)
+(setq-default c-basic-offset 2)
+(setq js-indent-level 2)
+(setq line-number-mode t)
+(setq column-number-mode t)
+
+(defun open-side-by-side (switch)
+  (let ((file1 (expand-file-name (pop command-line-args-left)))
+        (file2 (expand-file-name (pop command-line-args-left))))
+    (split-window-horizontally)
+    (find-file file1)
+    (find-file-other-window file2)))
+
+(add-to-list 'command-switch-alist '("-sbs" . open-side-by-side))
+
+(defun th-display-buffer (buffer force-other-window)
+  (or (get-buffer-window buffer)
+      (if (one-window-p)
+         (let ((new-win (if (> (window-width) 165)
+                             (split-window-horizontally)
+                           (split-window-vertically))))
+            (set-window-buffer new-win buffer)
+            new-win)
+        (let ((new-win (get-lru-window)))
+          (set-window-buffer new-win buffer)
+          new-win))))

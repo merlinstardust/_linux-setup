@@ -1,0 +1,47 @@
+#!/bin/sh
+
+# not interactive so do nothing
+[[ $- != *i* ]] && return
+
+# HISTORY
+# append to history
+shopt -s histappend
+# no duplicates
+HISTCONTROL=ignoredups:ignorespace
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# update LINES and COLUMNS after window resizing
+shopt -s checkwinsize
+
+# make less more friendly for non-text input
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# PROMPT
+color_num=2 # green
+symbol=$
+# if root, change color and symbol
+if [[ ${EUID} == 0 ]] ; then
+  color_num=1 # red
+  symbol="#"
+fi
+export PS1="\[\033[01;3${color_num}m\]\w\[\033[01;34m\]\$(__git_ps1 ' (%s)')\n${symbol} \[\033[00m\]"
+
+unset color_num
+unset symbol
+
+export EDITOR='emacs -nw'
+export VISUAL='emacs -nw'
+export BROWSER='google-chrome'
+
+export PATH=~/.bin:$PATH
+
+for s in ~/.sources/*; do
+  source $s
+done
+
+for s in ~/.secrets/*; do
+  source $s
+done
+
+cd ~/code
