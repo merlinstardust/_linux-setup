@@ -17,13 +17,10 @@ shopt -s checkwinsize
 # make less more friendly for non-text input
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-sourcesDir=$HOME/.sources
-ls -B $sourcesDir | while read filename; do
-  echo "source $sourcesDir/$filename"
-  source $sourcesDir/$filename
+for filename in $HOME/.sources/*; do
+  echo "source $filename"
+  source $filename
 done
-
-alias
 
 # PROMPT
 color_num=2 # green

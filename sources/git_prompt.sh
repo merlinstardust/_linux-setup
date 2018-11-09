@@ -96,7 +96,6 @@
 # repository level by setting bash.hideIfPwdIgnored to "false".
 
 # check whether printf supports -v
-echo "GIT PROMPT"
 
 __git_printf_supports_v=
 printf -v __git_printf_supports_v -- '%s' yes >/dev/null 2>&1
