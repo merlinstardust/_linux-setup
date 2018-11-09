@@ -12,3 +12,6 @@
 	default = simple
 [core]
 	excludesfile = ~/.globalignore
+[user]
+	name = Merlin
+	email = merlinpatt@gmail.com
