@@ -18,7 +18,6 @@ shopt -s checkwinsize
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 for filename in $HOME/.sources/*; do
-  echo "source $filename"
   source $filename
 done
 
