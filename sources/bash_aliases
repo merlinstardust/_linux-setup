@@ -1,3 +1,4 @@
 alias emacs='emacs -nw'
 alias m='meteor --settings settings/local.json'
-alias grep='grep --exclude-dir=.meteor --exclude-dir=.git --color'
+alias grep='grep --exclude-dir=.meteor --exclude-dir=.git --color -r'
+alias python='python3'
