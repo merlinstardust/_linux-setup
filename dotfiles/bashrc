@@ -17,6 +17,14 @@ shopt -s checkwinsize
 # make less more friendly for non-text input
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+sourcesDir=$HOME/.sources
+ls -B $sourcesDir | while read filename; do
+  echo "source $sourcesDir/$filename"
+  source $sourcesDir/$filename
+done
+
+alias
+
 # PROMPT
 color_num=2 # green
 symbol=$
@@ -34,14 +42,6 @@ export EDITOR='emacs -nw'
 export VISUAL='emacs -nw'
 export BROWSER='google-chrome'
 
-export PATH=~/.bin:$PATH
+export PATH=$HOME/.bin:$PATH
 
-for s in ~/.sources/*; do
-  source $s
-done
-
-for s in ~/.secrets/*; do
-  source $s
-done
-
-cd ~/code
+cd $HOME/code

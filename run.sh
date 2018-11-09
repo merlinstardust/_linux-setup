@@ -6,22 +6,23 @@ ls -B dotfiles | while read filename; do
     ln -fs $dotfilesDir/$filename $HOME/.$filename
   fi
 done
-ln -frs ssh_config $HOME/.ssh/config
 echo "dotfiles copied"
 
-ln -rs sources/ $HOME/.sources/
+rm -f $HOME/.sources
+ln -s `pwd`/sources/ $HOME/
+mv $HOME/sources $HOME/.sources
 echo "sources copied"
 
-ln -rs secrets/ $HOME/.secrets/
-
-ln -rs bin/ $HOME/.bin/
+rm -f $HOME/.bin
+ln -s `pwd`/bin/ $HOME/
+mv $HOME/bin $HOME/.bin
 echo "bin copied"
 
 mkdir -p $HOME/code/
 mkdir -p $HOME/.todos
 
 # install programs
-sudo apt-get install -y emacs
+# sudo apt-get install -y emacs
 
 # TODOs
 # meteor
