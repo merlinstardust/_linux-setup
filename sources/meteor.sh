@@ -1,3 +1,3 @@
 #!/bin/sh
 
-export PACKAGE_DIRS=$HOME/code/packages-meteor/
+export METEOR_PACKAGE_DIRS=$HOME/code/packages-meteor/
