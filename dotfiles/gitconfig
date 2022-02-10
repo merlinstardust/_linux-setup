@@ -11,7 +11,7 @@
 [push]
 	default = simple
 [core]
-	excludesfile = ~/.globalignore
+	excludesfile = ~/.globalgitignore
 [user]
 	name = Merlin (they/them)
 	email = 421960+merlinpatt@users.noreply.github.com
