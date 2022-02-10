@@ -13,8 +13,8 @@
 [core]
 	excludesfile = ~/.globalignore
 [user]
-	name = Merlin
-	email = merlinpatt@gmail.com
+	name = Merlin (they/them)
+	email = 421960+merlinpatt@users.noreply.github.com
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f

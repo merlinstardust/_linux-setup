@@ -1,2 +1,0 @@
-# test existence and source it
-[[ -f ~/.bashrc ]] && . ~/.bashrc

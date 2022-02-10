@@ -1,0 +1,69 @@
+#!/bin/zsh
+
+# not interactive so do nothing
+[[ $- != *i* ]] && return
+
+## PROMPT
+autoload -U colors && colors
+autoload -Uz vcs_info
+
+precmd() {
+    vcs_info
+    # Print a newline before the prompt, unless it's the
+    # first prompt in the process  
+    if [ -z "$NEW_LINE_BEFORE_PROMPT" ]; then
+        NEW_LINE_BEFORE_PROMPT=1
+    elif [ "$NEW_LINE_BEFORE_PROMPT" -eq 1 ]; then
+        echo ""
+    fi
+}
+
+# Format vcs_info_msg_0_ variable
+zstyle ':vcs_info:git:*' formats '(%b)'
+
+# Set prompt
+setopt PROMPT_SUBST
+PROMPT='%B${fg[green]}${PWD/#$HOME/~} ${fg[blue]}${vcs_info_msg_0_}%f'$'\n$%b '
+
+## HISTORY
+setopt HIST_IGNORE_ALL_DUPS
+setopt INC_APPEND_HISTORY
+HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
+HISTSIZE=2000
+SAVEHIST=5000
+
+## MAKE "LESS" FRIENDLY FOR NON-TEXT
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+## SCAN IN SOURCES LIKE ALIASES
+for filename in $HOME/.sources/*; do
+  source $filename
+done
+source ~/.nvm/nvm.sh
+
+## COMPLETION
+autoload -Uz compinit && compinit
+
+## OPTIONS
+# cd without the command if directory name
+setopt AUTO_CD
+# offer corrections for misspellings
+setopt CORRECT
+setopt CORRECT_ALL
+
+## ENVIRONMENTAL VARIABLES
+export EDITOR='emacs -nw'
+export VISUAL='emacs -nw'
+export BROWSER='google-chrome'
+
+export ANDROID_HOME=/Users/$USER/Library/Android/sdk
+
+export PATH=$HOME/.bin:$PATH
+export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/bin
+export PATH=./node_modules/.bin:${PATH}
+export PATH=/Users/mepatterson/.bin/apache-maven-3.6.3/bin:${PATH}
+
+export NODE_EXTRA_CA_CERTS=~/.certs/paypal-cloud.pem
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home
+
+export DEV_BROWSER='Google Chrome Beta'

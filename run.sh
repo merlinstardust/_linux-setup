@@ -9,27 +9,19 @@ done
 echo "dotfiles copied"
 
 rm -f $HOME/.sources
-ln -s `pwd`/sources/ $HOME/
-mv $HOME/sources $HOME/.sources
+ln -s `pwd`/sources/ $HOME/.sources
 echo "sources copied"
 
 rm -f $HOME/.bin
-ln -s `pwd`/bin/ $HOME/
+ln -s `pwd`/bin/ $HOME/.bin
 mv $HOME/bin $HOME/.bin
 echo "bin copied"
 
+ln -s `pwd`/vscode_settings.json "$HOME/Library/Application Support/Code/User/settings.json"
+
 mkdir -p $HOME/code/
-mkdir -p $HOME/.todos
+mkdir -p $HOME/.tasks
 
-# install programs
-# sudo apt-get install -y emacs
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# TODOs
-# meteor
-# atom
-# python history
-# mongo
-# chrome
-
-# look at wget -qO- URL | sh
-# test with bitly
+brew install emacs
