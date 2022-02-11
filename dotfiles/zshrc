@@ -69,3 +69,4 @@ export NODE_EXTRA_CA_CERTS=~/.certs/paypal-cloud.pem
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home
 
 export DEV_BROWSER='Google Chrome Beta'
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

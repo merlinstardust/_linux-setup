@@ -34,3 +34,7 @@ echo
 brew install emacs
 echo "emacs installed"
 echo
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+echo "nvm installed"
+echo

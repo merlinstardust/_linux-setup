@@ -1,15 +1,13 @@
 {
   "editor.fontSize": 11,
   "editor.renderWhitespace": "boundary",
-  "editor.wordWrapColumn": 100,
+  "editor.wordWrapColumn": 120,
   "editor.wordWrap": "bounded",
   "editor.scrollBeyondLastLine": false,
   "editor.scrollBeyondLastColumn": 10,
   "editor.padding.bottom": 20,
   "editor.roundedSelection": false,
-  "editor.rulers": [
-    120
-  ],
+  "editor.rulers": [120],
   "explorer.autoReveal": false,
   "[markdown]": {
     "editor.formatOnSave": false
