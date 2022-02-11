@@ -38,3 +38,6 @@ echo
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 echo "nvm installed"
 echo
+
+# ignore future git config updates
+git update-index --skip-worktree `pwd`/dotfiles/gitconfig
