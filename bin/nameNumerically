@@ -1,0 +1,35 @@
+#!/bin/bash
+
+POSITIONAL=()
+while [[ $# -gt 0 ]]
+do
+key="$1"
+
+case $key in
+  -x|--execute)
+    REAL_RUN=1
+    shift # past argument
+    ;;
+  *) # unknown
+    POSITIONAL+=("$1") # save it in an array for later
+    shift # past argument
+    ;;
+esac
+done
+
+array=(*); 
+for i in $(seq 0 $((${#array[@]}-1))); 
+do 
+  f=${array[$i]}; 
+  fExt=$(echo $f | cut -d'.' -f2); 
+
+  n=$i;
+  if [[ $i -lt 100 ]]; then n=0$i; fi;
+  if [[ $i -lt 10 ]]; then n=00$i; fi;
+
+  echo "mv [$f] [$n.$fExt]";
+  if [[ $REAL_RUN ]];
+  then
+    mv "$f" "$n.$fExt"
+  fi
+done

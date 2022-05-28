@@ -1,0 +1,72 @@
+#!/bin/bash
+# set -x
+
+POSITIONAL=()
+while [[ $# -gt 0 ]]
+do
+key="$1"
+
+case $key in
+    -x|--execute)
+	REAL_RUN=1
+	shift # past argument                                                                                               
+	;;
+    -i|--input)
+	input=$2
+	shift; shift
+	;;
+    -t|-t1|--time1|--time)
+	time1=$2
+	shift; shift
+	;;
+    -t2|--time2)
+	time2=$2
+	shift; shift
+	;;
+    -n1|--name1)
+	name1=$2;
+	shift; shift
+	;;
+    -n2|--name2)
+	name2=$2;
+	shift; shift
+	;;
+    *) # unknown
+        POSITIONAL+=("$1") # save it in an array for later                                                              
+        shift # past argument                                                                                           
+        ;;
+esac
+done
+
+set -- "${POSITIONAL[@]}"
+
+if [ -z "$time2" ];
+then
+    echo "time2 not set, setting to time1";
+    time2=$time1;
+fi
+
+echo "REAL $REAL_RUN"
+
+echo "input: [$input]"
+echo "time1: [$time1]"
+echo "time2: [$time2]"
+echo "name1: [$name1]"
+echo "name2: [$name2]"
+
+
+if [[ $REAL_RUN ]];
+then
+    echo ""
+    echo "ffmpeg -i \"$input\" -to $time1 -c copy \"$name1\""
+    echo ""
+    ffmpeg -i "$input" -to $time1 -c copy "$name1";
+    echo ""
+    echo "ffmpeg -ss $time2 -avoid_negative_ts 1 -i \"$input\" -c copy \"$name2\""
+    echo ""
+    ffmpeg -ss $time2 -avoid_negative_ts 1 -i "$input" -c copy "$name2";
+else
+    echo "Dryrun"
+    echo "  ffmpeg -i \"$input\" -to $time1 -c copy \"$name1\""
+    echo "  ffmpeg -ss $time2 -avoid_negative_ts 1 -i \"$input\" -c copy \"$name2\""
+fi

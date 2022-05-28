@@ -8,6 +8,9 @@ auto-save-list
 tramp
 .\#*
 
+# Mac stuff
+.DS_Store
+
 # Org-mode
 .org-id-locations
 *_archive

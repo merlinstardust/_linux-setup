@@ -1,0 +1,15 @@
+#!/bin/bash
+
+url="$(pbpaste)"
+name="$1"
+
+if [[ "$1" == "http"* ]]; then
+    echo "Arg 1 is URL, should be name of episode, exiting"
+    exit 1
+fi
+
+echo "Downloading [$name] from:"
+echo "$url"
+echo
+
+ffmpeg -i "$url" -c copy -bsf:a aac_adtstoasc "$name.mp4"
