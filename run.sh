@@ -26,17 +26,33 @@ ln -s `pwd`/vscode_settings.json "$HOME/Library/Application Support/Code/User/se
 mkdir -p $HOME/code/
 mkdir -p $HOME/.tasks
 
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-eval "$(/opt/homebrew/bin/brew shellenv)"
-echo "brew installed"
+# if installed
+if [[ -x $(which brew) ]]; then
+  brew update
+  brew upgrade
+  echo "brew updated and upgrade"
+else
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+  echo "brew installed"
+fi
 echo
 
-brew install emacs
-echo "emacs installed"
+# if installed
+if [[ -x $(which emacs) ]]; then
+  echo "emacs already installed"
+else
+  brew install emacs
+  echo "emacs installed"
+fi
 echo
 
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-echo "nvm installed"
+if [[ -x $(which nvm) ]]; then
+  echo "nvm already installed"
+else
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+  echo "nvm installed"
+fi
 echo
 
 # ignore future git config updates
