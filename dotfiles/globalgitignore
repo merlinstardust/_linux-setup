@@ -43,3 +43,12 @@ tramp
 out/
 
 todos
+#dist/bizcomponents/
+node_modules/
+
+solo*
+.secrets
+*.log*
+*.solo*
+*.log.*
+*.solo.*

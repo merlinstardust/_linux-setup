@@ -9,9 +9,9 @@
 [credential]
 	helper = cache --timeout 3600
 [push]
-	default = simple
+	default = current
 [core]
-	excludesfile = ~/.globalignore
+	excludesfile = ~/.globalgitignore
 [user]
 	name = Merlin (they/them)
 	email = 421960+merlinpatt@users.noreply.github.com

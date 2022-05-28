@@ -3,33 +3,41 @@
 dotfilesDir=`pwd`/dotfiles
 ls -B dotfiles | while read filename; do
   if [ $filename != 'run.sh' ]; then
-    ln -fs $dotfilesDir/$filename $HOME/.$filename
+    rm -r $HOME/.$filename
+    ln -s $dotfilesDir/$filename $HOME/.$filename
   fi
 done
 echo "dotfiles copied"
+echo
 
 rm -f $HOME/.sources
-ln -s `pwd`/sources/ $HOME/
-mv $HOME/sources $HOME/.sources
+ln -s `pwd`/sources/ $HOME/.sources
 echo "sources copied"
+echo
 
 rm -f $HOME/.bin
-ln -s `pwd`/bin/ $HOME/
-mv $HOME/bin $HOME/.bin
+ln -s `pwd`/bin/ $HOME/.bin
 echo "bin copied"
+echo
+
+rm "$HOME/Library/Application Support/Code/User/settings.json"
+ln -s `pwd`/vscode_settings.json "$HOME/Library/Application Support/Code/User/settings.json"
 
 mkdir -p $HOME/code/
-mkdir -p $HOME/.todos
+mkdir -p $HOME/.tasks
 
-# install programs
-# sudo apt-get install -y emacs
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
+echo "brew installed"
+echo
 
-# TODOs
-# meteor
-# atom
-# python history
-# mongo
-# chrome
+brew install emacs
+echo "emacs installed"
+echo
 
-# look at wget -qO- URL | sh
-# test with bitly
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+echo "nvm installed"
+echo
+
+# ignore future git config updates
+git update-index --skip-worktree `pwd`/dotfiles/gitconfig

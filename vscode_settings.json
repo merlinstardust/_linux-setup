@@ -1,0 +1,27 @@
+{
+  "editor.fontSize": 11,
+  "editor.renderWhitespace": "boundary",
+  "editor.wordWrapColumn": 120,
+  "editor.wordWrap": "bounded",
+  "editor.scrollBeyondLastLine": false,
+  "editor.scrollBeyondLastColumn": 10,
+  "editor.padding.bottom": 20,
+  "editor.roundedSelection": false,
+  "editor.rulers": [120],
+  "explorer.autoReveal": false,
+  "[markdown]": {
+    "editor.formatOnSave": false
+  },
+  "window.openFoldersInNewWindow": "on",
+  "files.exclude": {
+    "**/.git": false
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.minimap.enabled": false,
+  "editor.formatOnSave": true,
+  "editor.inlineSuggest.enabled": true,
+  "extensions.ignoreRecommendations": true,
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "security.workspace.trust.untrustedFiles": "open",
+  "javascript.updateImportsOnFileMove.enabled": "always"
+}
