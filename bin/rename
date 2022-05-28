@@ -34,9 +34,8 @@ while
 do
   if [[ $REAL_RUN ]];
   then
-      echo -e "Real mv\n  $old\n  $new";
       mv "$old" "$new";
   else
-      echo -e "Dryrun mv\n  $old\n  $new";
+      echo -e "Dryrun mv [$old] [$new]";
   fi
 done

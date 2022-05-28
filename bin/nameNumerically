@@ -19,9 +19,9 @@ done
 
 array=(*); 
 for i in $(seq 0 $((${#array[@]}-1))); 
-do 
+do
   f=${array[$i]}; 
-  fExt=$(echo $f | cut -d'.' -f2); 
+  fExt=$(echo $f | sed -E 's/.*\.(jpg|mp4)/\1/'); 
 
   n=$i;
   if [[ $i -lt 100 ]]; then n=0$i; fi;
