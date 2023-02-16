@@ -1,4 +1,7 @@
+if command -v emacs;
+then
 alias emacs='emacs -nw'
+fi
 alias m='meteor --settings settings/local.json'
 alias python='python3'
 alias grep2='grep -r --color --exclude CHANGELOG.md --exclude-dir=.configcache --exclude-dir=__pollyTests__ --exclude-dir=report --exclude-dir=__recordings__ --exclude-dir=.cache --exclude-dir=.git --exclude-dir=.meteor --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=_site --exclude=package-lock.json --exclude yarn.lock --exclude-dir=dist --exclude=\*.map'
