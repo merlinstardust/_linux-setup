@@ -66,7 +66,8 @@ export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HO
 export PATH=./node_modules/.bin:${PATH}
 export PATH=/Users/mepatterson/.bin/apache-maven-3.6.3/bin:${PATH}
 # Add homebrew to PATH
-eval "$($(which brew) shellenv)"
+eval $(/opt/homebrew/bin/brew shellenv)
+#eval "$($(which brew) shellenv)"
 
 export NODE_EXTRA_CA_CERTS=~/.certs/paypal-cloud.pem
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home
