@@ -12,6 +12,9 @@
   "[markdown]": {
     "editor.formatOnSave": false
   },
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+  },
   "window.openFoldersInNewWindow": "on",
   "files.exclude": {
     "**/.git": false
@@ -23,5 +26,9 @@
   "extensions.ignoreRecommendations": true,
   "terminal.integrated.defaultProfile.osx": "zsh",
   "security.workspace.trust.untrustedFiles": "open",
-  "javascript.updateImportsOnFileMove.enabled": "always"
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "prettier.printWidth": 120,
+  "prettier.singleQuote": true,
+  "update.mode": "manual",
+  "editor.tabSize": 2
 }

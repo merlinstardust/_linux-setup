@@ -48,12 +48,10 @@ autoload -Uz compinit && compinit
 # cd without the command if directory name
 setopt AUTO_CD
 # offer corrections for misspellings
-setopt CORRECT
-setopt CORRECT_ALL
+setopt CORRECT # only corrects commands
+# setopt CORRECT_ALL # corrects arguments
 
 ## ENVIRONMENTAL VARIABLES
-export EDITOR='emacs -nw'
-export VISUAL='emacs -nw'
 export BROWSER='google-chrome'
 
 export ANDROID_HOME=/Users/$USER/Library/Android/sdk

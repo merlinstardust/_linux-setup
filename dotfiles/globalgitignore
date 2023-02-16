@@ -14,6 +14,7 @@ tramp
 
 # flymake-mode
 *_flymake.*
+.DS_Store
 
 
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode
