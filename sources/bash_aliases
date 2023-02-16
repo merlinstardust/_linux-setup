@@ -1,4 +1,4 @@
-if command -v emacs;
+if command -v emacs &> /dev/null;
 then
 alias emacs='emacs -nw'
 fi

@@ -52,7 +52,7 @@ setopt CORRECT
 # setopt CORRECT_ALL # corrects arguments
 
 ## ENVIRONMENTAL VARIABLES
-if command -v emacs;
+if command -v emacs &> /dev/null;
 then
 export EDITOR='emacs -nw'
 export VISUAL='emacs -nw'
@@ -66,10 +66,17 @@ export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HO
 export PATH=./node_modules/.bin:${PATH}
 export PATH=/Users/mepatterson/.bin/apache-maven-3.6.3/bin:${PATH}
 # Add homebrew to PATH
+if [[ -f /opt/homebrew/bin/brew ]];
+then
 eval $(/opt/homebrew/bin/brew shellenv)
-#eval "$($(which brew) shellenv)"
+else
+eval "$($(which brew) shellenv)"
+fi
 
+if [[ -f ~/.certs/paypal-cloud.pem ]];
+then
 export NODE_EXTRA_CA_CERTS=~/.certs/paypal-cloud.pem
+fi    
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home
 
 export DEV_BROWSER='Google Chrome Beta'

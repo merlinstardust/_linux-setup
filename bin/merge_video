@@ -1,5 +1,10 @@
 #!/bin/zsh
 
+if [[ -f input.txt ]];
+then
+    rm -i input.txt
+fi
+
 POSITIONAL=()
 while [[ $# -gt 0 ]]
 do
@@ -21,14 +26,19 @@ case $key in
 esac
 done
 
-echo 'Contents of input.txt'
-echo '---------------------'
+echo "REAL $REAL_RUN"
+
+echo "Contents of input.txt"
+echo "---------------------"
 cat input.txt
-echo '---------------------'
-echo ''
-echo 'ffmpeg -safe 0 -f concat -i input.txt -c copy $name'
+echo "---------------------"
+echo ""
+echo "name: [$name]"
 
 if [[ $REAL_RUN ]];
 then
-    ffmpeg -safe 0 -f concat -i input.txt -c copy $name
+    ffmpeg -safe 0 -f concat -i input.txt -c copy "$name"
+else
+    echo "Dryrun"
+    echo "  ffmpeg -safe 0 -f concat -i input.txt -c copy \"$name\""
 fi
