@@ -49,7 +49,7 @@ autoload -Uz compinit && compinit
 setopt AUTO_CD
 # offer corrections for misspellings
 setopt CORRECT
-setopt CORRECT_ALL
+# setopt CORRECT_ALL # corrects arguments
 
 ## ENVIRONMENTAL VARIABLES
 export EDITOR='emacs -nw'

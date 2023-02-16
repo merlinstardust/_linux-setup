@@ -24,6 +24,9 @@
   "[markdown]": {
     "editor.formatOnSave": false
   },
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+  },
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
@@ -39,4 +42,9 @@
   "[scss]": {
     "editor.suggest.insertMode": "replace"
   },
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "prettier.printWidth": 120,
+  "prettier.singleQuote": true,
+  "update.mode": "manual",
+  "editor.tabSize": 2
 }
