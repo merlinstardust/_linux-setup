@@ -1,0 +1,45 @@
+#!/bin/bash
+
+POSITIONAL=()
+while [[ $# -gt 0 ]]
+do
+  key="$1"
+  case $key in
+    -x|--execute)
+      REAL_RUN=1
+      shift # past argument
+      ;;
+    -o|--oldNames)
+      oldNamesFile=$2;
+      shift; shift; # past argument
+      ;;
+    -n|--newNames)
+      newNamesFile=$2;
+      shift; shift; # past argument
+      ;;
+    *) # unknown option
+      POSITIONAL+=("$1") # save it in an array for later
+      shift # past argument
+      ;;
+  esac
+done
+
+echo "REAL $REAL_RUN";
+
+echo "Old Names File [$oldNamesFile]";
+echo "New Names File [$newNamesFile]";
+
+exec 3<$oldNamesFile
+exec 4<$oldNamesFile
+
+while
+  IFS= read -r oldFileName <&3
+  IFS= read -r newFileName <&4
+do
+  echo "mv [$oldFileName]"
+  echo "   [$newFileName]"
+  if [[ $REAL_RUN ]];
+  then
+    mv "$oldFileName" "$newFileName";
+  fi
+done

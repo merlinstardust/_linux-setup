@@ -9,10 +9,6 @@ do
       REAL_RUN=1
       shift # past argument
       ;;
-    -d|--directoryNesting)
-      NESTED=1
-      shift;
-      ;;
     *) # unknown
       POSITIONAL+=("$1") # save it in an array for later
       shift # past argument
@@ -20,24 +16,27 @@ do
   esac
 done
 
-capitalizeSingleFile () {
+addSpacesToSingleFile () {
   local "${@}"
   local file=${file}
 
-  newFile=$(echo $file | awk '{for(i=1;i<=NF;i++){ $i=toupper(substr($i,1,1)) substr($i,2) }}1' );
-  echo "mv [$file] [$newFile]";
+  extension=$(echo $file | sed -E 's/.*([a-z0-9]{3})$/\1/');
+  newFile=$(echo $file | sed -E 's/\./ /g' | sed -E "s/ $extension/.$extension/");
+  echo "mv [$file]";
+  echo "   [$newFile]";
   if [[ $REAL_RUN ]];
   then
     mv "$file" "$newFile"
   fi
 }
 
-if [ $NESTED ]; then
+if [ $NESTED ];
+then
   for file in */*; do
-    capitalizeSingleFile file="$file"
+    addSpacesToSingleFile file="$file"
   done
 else
   for file in *; do
-    capitalizeSingleFile file="$file"
+    addSpacesToSingleFile file="$file"
   done
 fi

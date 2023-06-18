@@ -1,0 +1,94 @@
+#!/bin/zsh
+
+AUTO_ADD_DIRECTORY='/Users/merlin/Music/iTunes/iTunes Media/Automatically Add to Music.localized'
+DEFAULT_SPEED=1.8
+
+speed=$DEFAULT_SPEED
+
+POSITIONAL=()
+while [[ $# -gt 0 ]]
+do
+  key="$1"
+  case $key in
+    -x|--execute)
+      REAL_RUN=1
+      shift # past argument
+      ;;
+    -i|--input)
+      inputFile=$2
+      shift; shift;
+      ;;
+    -s|--speed)
+      speed=$2
+      shift; shift;
+      ;;
+    -a|--author)
+      AUTHOR=1
+      shift;
+      ;;
+    -b|--book)
+      BOOK=1
+      shift;
+      ;;
+    *) # unknown
+      POSITIONAL+=("$1")
+      shift # past argument
+      ;;
+  esac
+done
+
+echo "IN DIRECTORY: $DIRECTORY"
+echo "SPEED: $speed"
+
+fileNumber=0
+
+speedUpOneFile () {
+  local "${@}"
+  local inputFile=${inputFile}
+
+  speedString=$(echo $speed | sed -E 's/\./_/');
+  if [[ "$inputFile" = *"/"* ]];
+  then
+    directory=$(echo $inputFile | cut -d'/' -f1);
+    fileName=$(echo $inputFile | cut -d'/' -f2);
+  else
+    directory=""
+    fileName=$inputFile
+  fi
+
+  extension=$(echo $fileName | sed -E 's/.*([a-z0-9]{3})$/\1/');
+  fastFile=$(echo $fileName | sed -E "s/\.$extension/_fast_$speedString.$extension/");
+  fastFile=$(echo $fastFile | sed -E "s/ /_/g;s/\./_/g;s/_$extension/.$extension/");
+
+  if [[ "$directory" = "" ]];
+  then
+    fastFile="$(($fileNumber))_$fastFile";
+  else
+    fastFile="$directory/$(($fileNumber))_$fastFile";
+  fi
+
+  fileNumber=$(($fileNumber+1))
+
+  echo "ffmpeg -i \"$inputFile\" -filter:a \"atempo=$speed\" -vn \"$fastFile\""
+  if [[ $REAL_RUN ]];
+  then
+    ffmpeg -i "$inputFile" -filter:a "atempo=$speed" -vn "$fastFile"
+    mv "$fastFile" "$AUTO_ADD_DIRECTORY/"
+  fi
+}
+
+if [ $AUTHOR ];
+then
+  for inputFile in */*;
+  do
+    speedUpOneFile inputFile=$inputFile
+  done
+elif [ $BOOK ];
+then
+  for inputFile in *;
+  do
+    speedUpOneFile inputFile=$inputFile
+  done
+else
+  speedUpOneFile inputFile=$inputFile
+fi

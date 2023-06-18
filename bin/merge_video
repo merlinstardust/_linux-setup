@@ -2,43 +2,42 @@
 
 if [[ -f input.txt ]];
 then
-    rm -i input.txt
+  rm -i input.txt
 fi
 
 POSITIONAL=()
 while [[ $# -gt 0 ]]
 do
-key="$1"
-case $key in
+  key="$1"
+  case $key in
     -x|--execute)
-        REAL_RUN=1
-        shift # past argument
-        ;;
+      REAL_RUN=1
+      shift # past argument
+      ;;
     -n|--name)
-	name=$2
-	shift; shift;
-	;;
+      name=$2
+      shift; shift;
+      ;;
     *) # unknown
-	echo "file '$1'" >> input.txt
-        POSITIONAL+=("$1")
-        shift # past argument
-        ;;
-esac
+      echo "file '$1'" >> input.txt
+      POSITIONAL+=("$1")
+      shift # past argument
+      ;;
+  esac
 done
 
 echo "REAL $REAL_RUN"
 
+echo "Name: [$name]"
 echo "Contents of input.txt"
 echo "---------------------"
 cat input.txt
 echo "---------------------"
 echo ""
-echo "name: [$name]"
+
+echo "ffmpeg -safe 0 -f concat -i input.txt -c copy \"$name\""
 
 if [[ $REAL_RUN ]];
 then
-    ffmpeg -safe 0 -f concat -i input.txt -c copy "$name"
-else
-    echo "Dryrun"
-    echo "  ffmpeg -safe 0 -f concat -i input.txt -c copy \"$name\""
+  ffmpeg -safe 0 -f concat -i input.txt -c copy "$name"
 fi

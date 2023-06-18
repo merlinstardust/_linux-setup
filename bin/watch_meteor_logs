@@ -1,3 +1,0 @@
-#!/bin/sh
-
-watch -n 0.2 "expect -c 'spawn meteor logs $1;send \"password\n\";interact' | tail -n 20"

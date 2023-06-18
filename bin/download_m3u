@@ -4,8 +4,8 @@ url="$(pbpaste)"
 name="$1"
 
 if [[ "$1" == "http"* ]]; then
-    echo "Arg 1 is URL, should be name of episode, exiting"
-    exit 1
+  echo "Arg 1 is URL, should be name of episode, exiting"
+  exit 1
 fi
 
 echo "Downloading [$name] from:"

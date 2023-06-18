@@ -8,26 +8,34 @@ echo '' >> $BIN_PATH/$1
 echo 'POSITIONAL=()' >> $BIN_PATH/$1
 echo 'while [[ $# -gt 0 ]]' >> $BIN_PATH/$1
 echo 'do' >> $BIN_PATH/$1
-echo 'key="$1"' >> $BIN_PATH/$1
-echo 'case $key in' >> $BIN_PATH/$1
+echo '  key="$1"' >> $BIN_PATH/$1
+echo '  case $key in' >> $BIN_PATH/$1
 echo '    -x|--execute)' >> $BIN_PATH/$1
-echo '        REAL_RUN=1' >> $BIN_PATH/$1
-echo '        shift # past argument' >> $BIN_PATH/$1
-echo '        ;;' >> $BIN_PATH/$1
+echo '      REAL_RUN=1' >> $BIN_PATH/$1
+echo '      shift # past argument' >> $BIN_PATH/$1
+echo '      ;;' >> $BIN_PATH/$1
 echo '    -n|--name)' >> $BIN_PATH/$1
-echo '        name=$2' >> $BIN_PATH/$1
-echo '        shift; shift;' >> $BIN_PATH/$1
-echo '        ;;' >> $BIN_PATH/$1
+echo '      name=$2' >> $BIN_PATH/$1
+echo '      shift; shift;' >> $BIN_PATH/$1
+echo '      ;;' >> $BIN_PATH/$1
 echo '    *) # unknown' >> $BIN_PATH/$1
-echo '        POSITIONAL+=("$1")' >> $BIN_PATH/$1
-echo '        shift # past argument' >> $BIN_PATH/$1
-echo '        ;;' >> $BIN_PATH/$1
-echo 'esac' >> $BIN_PATH/$1
+echo '      POSITIONAL+=("$1")' >> $BIN_PATH/$1
+echo '      shift # past argument' >> $BIN_PATH/$1
+echo '      ;;' >> $BIN_PATH/$1
+echo '  esac' >> $BIN_PATH/$1
 echo 'done' >> $BIN_PATH/$1
 echo '' >> $BIN_PATH/$1
+
+echo 'nameOfFunction () {' >> $BIN_PATH/$1
+echo '  local "${@}"' >> $BIN_PATH/$1
+echo '  local nameOfArg=${nameOfArg}' >> $BIN_PATH/$1
+echo '  # add code here' >> $BIN_PATH/$1
+echo '}' >> $BIN_PATH/$1
+echo '' >> $BIN_PATH/$1
+
 echo 'if [[ $REAL_RUN ]];' >> $BIN_PATH/$1
 echo 'then' >> $BIN_PATH/$1
-echo '# add code here' >> $BIN_PATH/$1
+echo '  nameOfFunction nameOfArg="argValue"' >> $BIN_PATH/$1
 echo 'fi' >> $BIN_PATH/$1
 
 

@@ -1,0 +1,45 @@
+#!/bin/zsh
+
+POSITIONAL=()
+while [[ $# -gt 0 ]]
+do
+  key="$1"
+  case $key in
+    -x|--execute)
+      REAL_RUN=1
+      shift # past argument
+      ;;
+    -a|--author)
+      author=$2
+      shift; shift;
+      ;;
+    -i|--addImage)
+      ADD_IMAGE=1
+      shift;
+      ;;
+    *) # unknown
+      POSITIONAL+=("$1")
+      shift # past argument
+      ;;
+  esac
+done
+
+echo "-i | --addImage"
+echo "-a | --author [author]"
+
+for book in *; do
+  echo "id3tag --artist=\"$author\" --album=\"$book\" $book/*.mp3;"
+  if [[ $REAL_RUN ]];
+  then
+    id3tag --artist="$author" --album="$book" $book/*.mp3;
+  fi
+
+  if [[ $ADD_IMAGE ]];
+  then
+    echo "eyeD3 --add-image \"$book/cover.jpg:FRONT_COVER\" $book/*.mp3"
+    if [[ $REAL_RUN ]];
+    then
+      eyeD3 --add-image "$book/cover.jpg:FRONT_COVER" $book/*.mp3
+    fi
+  fi
+done

@@ -1,41 +1,54 @@
-#!/bin/bash
+#!/bin/zsh
 
 POSITIONAL=()
 while [[ $# -gt 0 ]]
 do
-key="$1"
-
-case $key in
+  key="$1"
+  case $key in
     -x|--execute)
-    REAL_RUN=1
-    shift # past argument
-    ;;
-    *)    # unknown option
-    POSITIONAL+=("$1") # save it in an array for later
-    shift # past argument
-    ;;
-esac
+      REAL_RUN=1
+      shift # past argument
+      ;;
+    -s|--searchString)
+      searchString=$2
+      shift; shift
+      ;;
+    -r|--replacementString)
+      replacementString=$2
+      shift; shift
+      ;;
+    -d|--directoryNesting)
+      NESTED=1
+      shift;
+      ;;
+    *) # unknown
+      POSITIONAL+=("$1") # save it in an array for later
+      shift # past argument     
+      ;;
+  esac
 done
-set -- "${POSITIONAL[@]}"
 
-echo "REAL $REAL_RUN";
+echo "sed -E s/[$searchString]/[$replacementString]/";    
 
-old_names=$1
-new_names=$2
+renameSingleFile () {
+  local "${@}"
+  local file=${file}
 
-echo "$old_names $new_names";
-
-exec 3<$old_names
-exec 4<$new_names
-
-while
-  IFS= read -r old <&3
-  IFS= read -r new <&4
-do
+  newFile=$(echo $file | sed -E "s/$searchString/$replacementString/");
+  echo "mv [$file]";
+  echo "   [$newFile]";
   if [[ $REAL_RUN ]];
   then
-      mv "$old" "$new";
-  else
-      echo -e "Dryrun mv [$old] [$new]";
+    mv "$file" "$newFile"
   fi
-done
+}
+
+if [ $NESTED ]; then
+  for file in */*; do
+    renameSingleFile file="$file"
+  done
+else
+  for file in *; do
+    renameSingleFile file="$file"
+  done
+fi
