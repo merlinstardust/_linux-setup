@@ -6,8 +6,7 @@ DEFAULT_SPEED=1.8
 speed=$DEFAULT_SPEED
 
 POSITIONAL=()
-while [[ $# -gt 0 ]]
-do
+while [[ $# -gt 0 ]]; do
   key="$1"
   case $key in
     -x|--execute)
@@ -23,11 +22,15 @@ do
       shift; shift;
       ;;
     -a|--author)
-      AUTHOR=1
+      author=$(pwd | sed -E 's/.Volumes.media.books.audio\///')
+      IN_AUTHOR_FOLDER=1
       shift;
       ;;
     -b|--book)
-      BOOK=1
+      authorBook=$(pwd | sed -E 's/.Volumes.media.books.audio\///')
+      author=$(echo $authorBook | cut -d'/' -f1)
+      bookArg=$(echo $authorBook | cut -d'/' -f2)
+      IN_BOOK_FOLDER=1
       shift;
       ;;
     *) # unknown
@@ -41,52 +44,59 @@ echo "IN DIRECTORY: $DIRECTORY"
 echo "SPEED: $speed"
 
 fileNumber=0
+globalBook=""
 
 speedUpOneFile () {
   local "${@}"
   local inputFile=${inputFile}
 
-  speedString=$(echo $speed | sed -E 's/\./_/');
   if [[ "$inputFile" = *"/"* ]];
   then
     directory=$(echo $inputFile | cut -d'/' -f1);
     fileName=$(echo $inputFile | cut -d'/' -f2);
+    book="$directory";
   else
-    directory=""
-    fileName=$inputFile
+    directory="";
+    fileName="$inputFile";
+    book="$bookArg";
   fi
-
-  extension=$(echo $fileName | sed -E 's/.*([a-z0-9]{3})$/\1/');
-  fastFile=$(echo $fileName | sed -E "s/\.$extension/_fast_$speedString.$extension/");
-  fastFile=$(echo $fastFile | sed -E "s/ /_/g;s/\./_/g;s/_$extension/.$extension/");
-
-  if [[ "$directory" = "" ]];
+  if [[ "$globalBook" != "$book" ]];
   then
-    fastFile="$(($fileNumber))_$fastFile";
-  else
-    fastFile="$directory/$(($fileNumber))_$fastFile";
+    globalBook="$book"
+    fileNumber=0
   fi
+  extension=$(echo $fileName | sed -E 's/.*([a-z0-9]{3})$/\1/');
 
-  fileNumber=$(($fileNumber+1))
+  newFileName=$(echo $fileName | sed -E "s/\./_/g;s/_$extension/.$extension/");
+  newFileName=$(echo $newFileName | sed -E "s/[- )(]/_/g;");
+  newFileName=$(echo $newFileName | sed -E "s/_{1,}/_/g");
 
-  echo "ffmpeg -i \"$inputFile\" -filter:a \"atempo=$speed\" -vn \"$fastFile\""
+  numberString=$fileNumber
+  if [[ $fileNumber -lt 100 ]]; then numberString=0$fileNumber; fi;
+  if [[ $fileNumber -lt 10 ]]; then numberString=00$fileNumber; fi;
+
+  fileTitle=$(echo "${numberString}_$newFileName" | sed -E "s/\.$extension//");
+  filePath="$AUTO_ADD_DIRECTORY/$fileTitle.$extension"
+
+  fileNumber=$(($fileNumber+1));
+
+  echo "ffmpeg -i \"$inputFile\" -filter:a \"atempo=$speed\" -vn \"$filePath\""
+  echo "id3tag --artist=\"$author\" --album=\"$book\" --song=\"$fileTitle\" \"$filePath\""
+  echo ""
   if [[ $REAL_RUN ]];
   then
-    ffmpeg -i "$inputFile" -filter:a "atempo=$speed" -vn "$fastFile"
-    mv "$fastFile" "$AUTO_ADD_DIRECTORY/"
+    ffmpeg -i "$inputFile" -filter:a "atempo=$speed" -vn "$filePath"
+    id3tag --artist="$author" --album="$book" --song="$fileTitle" "$filePath"
+    mv "$filePath" "$AUTO_ADD_DIRECTORY/"
   fi
 }
 
-if [ $AUTHOR ];
-then
-  for inputFile in */*;
-  do
+if [ $IN_AUTHOR_FOLDER ]; then
+  for inputFile in */*; do
     speedUpOneFile inputFile=$inputFile
   done
-elif [ $BOOK ];
-then
-  for inputFile in *;
-  do
+elif [ $IN_BOOK_FOLDER ]; then
+  for inputFile in *; do
     speedUpOneFile inputFile=$inputFile
   done
 else
