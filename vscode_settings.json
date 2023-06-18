@@ -9,9 +9,7 @@
   "editor.scrollBeyondLastColumn": 10,
   "editor.padding.bottom": 20,
   "editor.roundedSelection": false,
-  "editor.rulers": [
-    120
-  ],
+  "editor.rulers": [120],
   "explorer.autoReveal": false,
   "window.openFoldersInNewWindow": "on",
   "files.exclude": {
@@ -30,9 +28,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "eslint.validate": [
-    "javascript"
-  ],
+  "eslint.validate": ["javascript"],
   "extensions.ignoreRecommendations": true,
   "terminal.integrated.defaultProfile.osx": "zsh",
   "security.workspace.trust.untrustedFiles": "open",
@@ -46,5 +42,6 @@
   "prettier.printWidth": 120,
   "prettier.singleQuote": true,
   "update.mode": "manual",
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "explorer.confirmDragAndDrop": false
 }
