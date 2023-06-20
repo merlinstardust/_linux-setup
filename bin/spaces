@@ -8,6 +8,10 @@ while [[ $# -gt 0 ]]; do
       REAL_RUN=1
       shift # past argument
       ;;
+    -s|--symbol)
+      symbol=$2
+      shift; shift;
+      ;;
     *) # unknown
       POSITIONAL+=("$1") # save it in an array for later
       shift # past argument
@@ -20,7 +24,7 @@ addSpacesToSingleFile () {
   local file=${file}
 
   extension=$(echo $file | sed -E 's/.*([a-z0-9]{3})$/\1/');
-  newFile=$(echo $file | sed -E 's/\./ /g' | sed -E "s/ $extension/.$extension/");
+  newFile=$(echo $file | sed -E "s/[._]/ /g" | sed -E "s/ $extension/.$extension/");
   echo "mv [$file]";
   echo "   [$newFile]";
   if [[ $REAL_RUN ]];
