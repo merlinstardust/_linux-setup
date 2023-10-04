@@ -6,7 +6,7 @@ POSITIONAL=()
 while [[ $# -gt 0 ]]; do
   key="$1"
   case $key in
-    -o|--output)
+    -o|--output|-n|--name)
       name=$2
       shift; shift;
       ;;
@@ -16,5 +16,7 @@ while [[ $# -gt 0 ]]; do
       ;;
   esac
 done
+
+echo "yt-dlp \"$url\" -o \"$name.%(ext)s\""
 
 yt-dlp "$url" -o "$name.%(ext)s"

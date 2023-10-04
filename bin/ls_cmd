@@ -1,5 +1,5 @@
 #!/bin/bash
 
-BIN_PATH=~/.bin
+BIN_PATH=~/.bin/
 
-ls --color --ignore=*~ $BIN_PATH
+ls --color $BIN_PATH
